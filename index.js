@@ -1,27 +1,45 @@
-// customElements.define('my-paragraph',
-//   class extends HTMLElement {
-//     constructor() {
-//       super();
-//       // let template = document.createElement()
+class MyEdWidget extends HTMLElement {
 
+    constructor() {
+      super()
+      this.props = {
+        color: this.getAttribute('color')
+      }
+      const shadow = this.attachShadow({mode: 'open'});
+      shadow.innerHTML = this.render(this.props)
+    }
 
-//       const template = document.getElementById('my-paragraph')
-//       let templateContent = template.content;
-//       console.log(template)
-//       const shadowRoot = this.attachShadow({mode: 'open'})
-//         .appendChild(templateContent.cloneNode(true));
-//   }
-// })
+    css() {
+      const {color} = this.props
+      return `
+      <style>
+          p {
+            font-size: 1.2em;
+            color: ${color};
+          }
+          .widget {
+            font-family: tahoma, sans-serif;
+            max-width: 30em;
+            background: whitesmoke;
+            padding: 1em;
+            margin: .2em;
+            box-sizing: border-box;
+          }
+      </style>
+      `
+    }
 
-const html = [1,2,3,4,5].map(() => '<p>Bird is the word</p>').join('')
+    render() {
+      const {color} = this.props
+      return `
+        ${this.css()}
+        <div class="widget">
+          <h2>This is a widget</h2>
+          <p>Bird is the word</p>
+          <p>Styling is scoped</p>
+        <div>
+      `
+    }
+}
 
-var MyParagraphProto = Object.create(HTMLElement.prototype);
-
-MyParagraphProto.createdCallback = function() {
-  this.insertAdjacentHTML('beforeEnd',`
-    ${html}`
-  );
-};
-
-document
-  .registerElement('my-paragraph', {prototype: MyParagraphProto});
+customElements.define('myed-widget', MyEdWidget)
