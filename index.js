@@ -41,7 +41,7 @@ class MyEdWidget extends HTMLElement {
       return `
         ${this.css()}
         <div class="widget">
-          <h2>This is a widget</h2>
+          <h2>This is a ${color} widget</h2>
           <p>Bird is the word</p>
           <p>Styling is scoped</p>
         <div>
