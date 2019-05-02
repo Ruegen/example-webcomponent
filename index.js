@@ -7,6 +7,13 @@ class MyEdWidget extends HTMLElement {
       }
       const shadow = this.attachShadow({mode: 'open'});
       shadow.innerHTML = this.render(this.props)
+      this.addEvents()
+    }
+
+    addEvents() {
+      this.addEventListener('click', () => {
+        alert(`The color of this widget is ${this.props.color}`)
+      })
     }
 
     css() {
